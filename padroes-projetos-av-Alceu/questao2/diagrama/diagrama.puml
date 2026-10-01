@@ -1,0 +1,41 @@
+@startuml
+interface FabricaAssinatura {
+  criarComprovante() : ComprovanteFiscal
+  criarPagamento() : Pagamento
+  criarTermo() : TermoPrivacidade
+}
+interface ComprovanteFiscal {
+  descricao() : String
+}
+interface Pagamento {
+  descricao() : String
+}
+interface TermoPrivacidade {
+  descricao() : String
+}
+class Assinatura {
+  Assinatura(fabrica : FabricaAssinatura)
+  ativar() : void
+}
+
+FabricaAssinatura <|.. FabricaBrasil
+FabricaAssinatura <|.. FabricaMexico
+ComprovanteFiscal <|.. Nfse
+ComprovanteFiscal <|.. Cfdi
+Pagamento <|.. Pix
+Pagamento <|.. Spei
+TermoPrivacidade <|.. Lgpd
+TermoPrivacidade <|.. Lfpdppp
+
+FabricaBrasil ..> Nfse : cria
+FabricaBrasil ..> Pix : cria
+FabricaBrasil ..> Lgpd : cria
+FabricaMexico ..> Cfdi : cria
+FabricaMexico ..> Spei : cria
+FabricaMexico ..> Lfpdppp : cria
+
+Assinatura --> FabricaAssinatura
+Assinatura --> ComprovanteFiscal
+Assinatura --> Pagamento
+Assinatura --> TermoPrivacidade
+@enduml
